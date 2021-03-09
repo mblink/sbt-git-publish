@@ -10,5 +10,6 @@ lazy val root = project.in(file("."))
       scalaBinaryVersion.value match {
         case "2.12" => "1.2.8"
       }
-    }
+    },
+    publishTo := Some(Resolver.file("file", file("/src/maven-repo")))
   )

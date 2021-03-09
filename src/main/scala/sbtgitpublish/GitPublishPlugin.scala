@@ -187,7 +187,7 @@ object GitPublishPlugin extends AutoPlugin {
         gitCmd(log, dir, "commit", "-m", s"Release $publishModule")
 
         // Push to the remote
-        // gitCmd(log, dir, "push", remote.name, branch.name)
+        gitCmd(log, dir, "push", remote.name, branch.name)
       }
     }).value
   )
