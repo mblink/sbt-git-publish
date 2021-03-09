@@ -60,7 +60,7 @@ object GitPublishPlugin extends AutoPlugin {
 
     cmd.!(ProcessLogger(proc(l => l.info(_: String), Left(())), proc(l => l.error(_: String), Right(())))) match {
       case 0 => lines
-      case code => sys.error(s"Command `${cmd.mkString("")}` exited with code $code")
+      case code => sys.error(s"Command `${cmd.mkString(" ")}` exited with code $code")
     }
   }
 
