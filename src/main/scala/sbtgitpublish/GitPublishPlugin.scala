@@ -96,7 +96,7 @@ object GitPublishPlugin extends AutoPlugin {
       gitPublishDir.?.value match {
         case Some(f) if (f / ".git").exists => Some(Resolver.file(f.toString,  f))
         case Some(f) =>
-          log.warn(gitRepoMsg(gitPublishDir.value, "has no `.git` directory"))
+          log.warn(gitRepoMsg(f, "has no `.git` directory"))
           None
         case None =>
           log.warn("Undefined setting `gitPublishDir`, retaining pre-existing publication settings")
