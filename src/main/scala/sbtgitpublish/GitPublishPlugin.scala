@@ -117,7 +117,7 @@ object GitPublishPlugin extends AutoPlugin {
       }
       val publishedFiles: Vector[File] = publishIvy.withModule(log) { case (ivy, md, _) =>
         val repo = ivy.getSettings.getResolver(publishConf.resolverName.getOrElse("")).asInstanceOf[FileSystemResolver]
-        val destPattern = repo.getArtifactPatterns.get(0).asInstanceOf[String]
+        val destPattern = repo.getArtifactPatterns.get(0).asInstanceOf[String].replace("[organisation]", "[orgPath]")
         val getDestFile = {
           val m = classOf[FileSystemResolver].getDeclaredMethod(
             "getDestination",
