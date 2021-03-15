@@ -1,4 +1,4 @@
-ThisBuild / version := "0.0.4"
+ThisBuild / version := "0.0.5"
 ThisBuild / organization := "bondlink"
 ThisBuild / homepage := Some(url("https://github.com/mblink/sbt-git-publish"))
 

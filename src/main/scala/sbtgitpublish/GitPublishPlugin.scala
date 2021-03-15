@@ -30,6 +30,14 @@ object GitPublishPlugin extends AutoPlugin {
   private case class GitRemote(name: String) { override def toString: String = name }
   private case class GitBranch(name: String) { override def toString: String = name }
 
+  @volatile private var alreadyWarned = Map[String, Boolean]()
+  private def warn(log: Logger, msg: String): Unit = GitPublishPlugin.synchronized {
+    alreadyWarned.get(msg).filter(identity).getOrElse {
+      log.warn(msg)
+      alreadyWarned = alreadyWarned + (msg -> true)
+    }
+  }
+
   @volatile private var gitRemoteCache = Map[String, Set[GitRemote]]()
   @volatile private var gitMainBranchCache = Map[(String, GitRemote), GitBranch]()
 
@@ -96,10 +104,10 @@ object GitPublishPlugin extends AutoPlugin {
       gitPublishDir.?.value match {
         case Some(f) if (f / ".git").exists => Some(Resolver.file(f.toString,  f))
         case Some(f) =>
-          log.warn(gitRepoMsg(f, "has no `.git` directory"))
+          warn(log, gitRepoMsg(f, "has no `.git` directory"))
           None
         case None =>
-          log.warn("Undefined setting `gitPublishDir`, retaining pre-existing publication settings")
+          warn(log, "Undefined setting `gitPublishDir`, retaining pre-existing publication settings")
           None
       }
     }).value,
