@@ -13,3 +13,16 @@ lazy val root = project.in(file("."))
     },
     publishTo := Some(Resolver.file("file", file("/src/maven-repo")))
   )
+
+lazy val docs = project.in(file("sbt-git-publish-docs"))
+  .settings(
+    publish := {},
+    publishLocal := {}
+  )
+  .settings(
+    moduleName := "sbt-git-publish-docs",
+    mdocExtraArguments += "--no-link-hygiene",
+    mdocOut := file("."),
+    mdocVariables := Map("VERSION" -> version.value)
+  )
+  .enablePlugins(MdocPlugin)
